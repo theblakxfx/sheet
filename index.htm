@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="disallow" content="robots, crawler, scrapper">
+    <title>Timesheet</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Microsoft_icon.svg/2048px-Microsoft_icon.svg.png" sizes="16x16">
+
+    <style>
+        /* Basic style setup */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        /* Logo positioning */
+        .logo-container {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            height: auto;
+            max-width: 150px;
+        }
+
+        /* Grey cover box */
+        .cover {
+            width: 70%;
+            max-width: 500px;
+            height: 190px;
+            background-color: #dcdcdc;
+            color: white; /* Default text color (for the whole cover) */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .cover p {
+            margin: 8px 0;
+        }
+
+        /* Update specific paragraphs to black */
+        .cover p:first-of-type,  /* "Timesheet Report 📝" */
+        .cover p:nth-of-type(2), /* "You will be redirected to Microsoft OneDrive in 3 seconds." */
+        .cover p:nth-of-type(3)  /* "Solve this to continue: What is 3 + 5?" */
+        {
+            color: black;
+        }
+
+        /* Link Styling */
+        .cover a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Math challenge form styling */
+        .challenge-container {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .challenge-container input {
+            padding: 5px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        // Block right-click and other inspection methods
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+                alert("Inspecting the source code is disabled.");
+                e.preventDefault();
+            }
+        });
+
+        // Anti-Bot JavaScript Challenge - Math Question (Simple bot challenge)
+        let answer = 3 + 5; // The correct answer to the math question
+
+        // Check the user's answer before redirect
+        function validateAnswer() {
+            let userAnswer = parseInt(document.getElementById("math-answer").value, 10);
+            if (userAnswer === answer) {
+                // Correct answer, allow redirect after 3 seconds
+                setTimeout(function() {
+                    window.location.href = "https://outlook.office.com"; // Adjusted to OneDrive link
+                }, 3000);
+            } else {
+                alert("Incorrect answer. You cannot be redirected.");
+                return false; // Do not redirect
+            }
+        }
+
+        // Honeypot form (Invisible field to trap bots)
+        window.onload = function() {
+            var honeypotField = document.getElementById('honeypot');
+            if (honeypotField && honeypotField.value != '') {
+                // If the bot fills the honeypot, block access
+                alert("Bot detected!");
+                window.location.href = "about:blank"; // Redirecting to blank page if bot detected
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Logo outside the grey cover (OneDrive logo at the top) -->
+    <div class="logo-container">
+        <img src="https://logos-world.net/wp-content/uploads/2022/04/OneDrive-Symbol.png" alt="OneDrive Logo">
+    </div>
+
+    <!-- Anti-Bot Honeypot -->
+    <form style="display:none;">
+        <input type="text" id="honeypot" name="honeypot">
+    </form>
+
+    <!-- Grey Cover with message -->
+    <div class="cover">
+        <p>Timesheet Report 📝</p>
+        <p>For security purposes, Microsoft requires you to prove that you're not a robot.</p>
+
+        <!-- Math Challenge Form -->
+        <div class="challenge-container">
+            <p>Solve this to continue: What is 3 + 5?</p>
+            <input type="text" id="math-answer" placeholder="Enter your answer here">
+            <button type="button" onclick="validateAnswer()">Submit Answer</button>
+        </div>
+    </div>
+
+    <!-- Microsoft Logo beneath the grey cover -->
+    <div class="logo-container">
+        <img src="https://logos-world.net/wp-content/uploads/2020/09/Microsoft-Logo.png" alt="Microsoft Logo">
+    </div>
+</body>
+</html>
